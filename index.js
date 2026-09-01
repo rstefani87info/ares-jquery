@@ -1,16 +1,16 @@
 import { JSDOM } from 'jsdom';
 import jquery from 'jquery';
-import fs from 'fs';
 import axios from 'axios';
 import mime from 'mime';
+import { fileExists, getFileContent } from "@ares/files";
 
 export async function parse(htmlOrUrlOrPath) {
     let htmlPageContent =  '';
-    if(fs.existsSync(html)){
-        return await parseFile(html);
+    if(fileExists(htmlOrUrlOrPath)){
+        return await parseFile(htmlOrUrlOrPath);
     }
-    else if (/^(?:[a-z]+:)?\/\//.test(html)) {
-       return await parseUrl(html);
+    else if (/^(?:[a-z]+:)?\/\//.test(htmlOrUrlOrPath)) {
+       return await parseUrl(htmlOrUrlOrPath);
     }
     else return parseCode(htmlPageContent);
      
@@ -18,9 +18,9 @@ export async function parse(htmlOrUrlOrPath) {
 export async function parseFile(file) {
     let pageContent =  '';
     let headers =  {};
-    if(fs.existsSync(html)){
-        htmlPageContent = fs.readFileSync(html, 'utf-8');
-        headers['content-type']=mime.getType(filePath);
+    if(fileExists(file)){
+        pageContent = getFileContent(file, 'utf-8');
+        headers['content-type']=mime.getType(file);
     }
     return parseCode(pageContent,headers);
 }

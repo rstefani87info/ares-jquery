@@ -14,5 +14,8 @@
     "jquery": "^3.7.1",
     "jsdom": "^24.1.0",
     "mime": "^4.0.3"
+  },
+  "devDependencies": {
+    "@ares/scd": "workspace:^"
   }
 }
